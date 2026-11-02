@@ -83,6 +83,10 @@ s{color:var(--muted);text-decoration:line-through}
 .pack.big .ph{aspect-ratio:16/9}
 .pack.big h3{font-size:26px}
 
+/* mídia real carregada de images/ no lugar do placeholder */
+.ph.filled{position:relative;overflow:hidden;padding:0;border:0;background:#0a0a0a}
+.ph.filled>img,.ph.filled>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
 /* ===== ANTES/DEPOIS ===== */
 .ba{position:relative;aspect-ratio:9/12;border-radius:var(--radius);overflow:hidden;margin-top:26px;user-select:none;touch-action:pan-y}
 .ba .layer{position:absolute;inset:0}
@@ -225,7 +229,7 @@ footer a{color:#888}
         </p>
       </div>
 
-      <div class="ph mock"><div><b>[IMAGEM]</b>Mockup central "Motion Pack Master" cercado pelas capas dos packs, em fundo escuro com grão</div></div>
+      <div class="ph mock" data-media="hero" data-alt="Motion Pack Master"><div><b>[IMAGEM]</b>Mockup central "Motion Pack Master" cercado pelas capas dos packs, em fundo escuro com grão</div></div>
     </div>
 
     <p class="chips-label">+10.000 arquivos para editar no seu programa favorito</p>
@@ -261,8 +265,8 @@ footer a{color:#888}
     <h2 class="h2">Mesmo vídeo. Outro nível.</h2>
     <p class="lead">Arraste e veja a diferença que os packs fazem na edição.</p>
     <div class="ba" id="ba">
-      <div class="layer before"><div class="ph"><div><b>[IMAGEM — ANTES]</b>Vídeo cru, sem efeitos</div></div></div>
-      <div class="layer after"><div class="ph"><div><b>[IMAGEM — DEPOIS]</b>Mesmo vídeo com título animado, LUT e efeitos do pack (edição real)</div></div></div>
+      <div class="layer before"><div class="ph" data-media="antes" data-alt="Antes"><div><b>[IMAGEM — ANTES]</b>Vídeo cru, sem efeitos</div></div></div>
+      <div class="layer after"><div class="ph" data-media="depois" data-alt="Depois"><div><b>[IMAGEM — DEPOIS]</b>Mesmo vídeo com título animado, LUT e efeitos do pack (edição real)</div></div></div>
       <span class="ba-label l">ANTES</span><span class="ba-label r">DEPOIS</span>
       <div class="ba-handle"></div>
       <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois">
@@ -276,9 +280,9 @@ footer a{color:#888}
     <p class="eyebrow">Quem já usa</p>
     <h2 class="h2">O que estão dizendo</h2>
     <div class="proofs">
-      <div class="ph"><div><b>[PRINT REAL]</b>Cliente 1</div></div>
-      <div class="ph"><div><b>[PRINT REAL]</b>Cliente 2</div></div>
-      <div class="ph"><div><b>[PRINT REAL]</b>Cliente 3</div></div>
+      <div class="ph" data-media="prova-1" data-alt="Resultado de cliente 1"><div><b>[PRINT REAL]</b>Cliente 1</div></div>
+      <div class="ph" data-media="prova-2" data-alt="Resultado de cliente 2"><div><b>[PRINT REAL]</b>Cliente 2</div></div>
+      <div class="ph" data-media="prova-3" data-alt="Resultado de cliente 3"><div><b>[PRINT REAL]</b>Cliente 3</div></div>
     </div>
   </div>
 </section>
@@ -348,22 +352,45 @@ document.querySelectorAll('.js-checkout:not(.hero .js-checkout)').forEach(a=>a.h
 
 /* Packs (nome, quantidade) — preencha as quantidades que faltam */
 const PACKS = [
-  ["Super Creators","7.800 itens"],
-  ["Mega FX","1.600 itens"],
-  ["Typography Pack","550+ itens"],
-  ["Ultimate de Títulos","305 itens"],
-  ["LUTs","700 itens"],
-  ["Scribble",""],
-  ["Esportivo",""],
-  ["Criativo",""],
-  ["Bold Promo",""],
-  ["Infográficos Elite",""]
+  ["Super Creators","7.800 itens","pack-01-super-creators"],
+  ["Mega FX","1.600 itens","pack-02-mega-fx"],
+  ["Typography Pack","550+ itens","pack-03-typography"],
+  ["Ultimate de Títulos","305 itens","pack-04-titulos"],
+  ["LUTs","700 itens","pack-05-luts"],
+  ["Scribble","","pack-06-scribble"],
+  ["Esportivo","","pack-07-esportivo"],
+  ["Criativo","","pack-08-criativo"],
+  ["Bold Promo","","pack-09-bold-promo"],
+  ["Infográficos Elite","","pack-10-infograficos"]
 ];
 document.getElementById('packs').innerHTML = PACKS.map((p,i)=> `
   <article class="pack${i===0?' big':''}">
-    <div class="ph"><div><b>[IMAGEM]</b>Prévia do pack ${p[0]} — ${i===0?'16:9 horizontal':'4:3, mostre vários itens do pack'}</div></div>
+    <div class="ph" data-media="${p[2]}" data-alt="Pack ${p[0]}"><div><b>[IMAGEM]</b>images/${p[2]}.webp — ${i===0?'16:9 horizontal':'4:3, mostre vários itens do pack'}</div></div>
     <div class="row"><h3>${p[0]}</h3>${p[1]?`<span class="n">${p[1]}</span>`:''}</div>
   </article>`).join('');
+
+/* Mídia: procura images/<nome>.(webp|jpg|png|gif|mp4). Sem arquivo, o placeholder continua. */
+const EXTS = ['webp','jpg','png','gif','mp4'];
+function showMedia(el, m){
+  el.classList.add('filled'); el.replaceChildren(m);
+  if (m.tagName === 'VIDEO') m.play().catch(()=>{});
+}
+function loadMedia(el){
+  const name = el.dataset.media; let i = 0;
+  (function next(){
+    if (i >= EXTS.length) return;
+    const ext = EXTS[i++], url = 'images/' + name + '.' + ext;
+    if (ext === 'mp4'){
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.setAttribute('playsinline',''); v.preload = 'auto';
+      v.onloadeddata = () => showMedia(el, v); v.onerror = next; v.src = url;
+    } else {
+      const im = new Image(); im.alt = el.dataset.alt || '';
+      im.onload = () => showMedia(el, im); im.onerror = next; im.src = url;
+    }
+  })();
+}
+document.querySelectorAll('[data-media]').forEach(loadMedia);
 
 /* Antes/depois */
 const ba = document.getElementById('ba');
