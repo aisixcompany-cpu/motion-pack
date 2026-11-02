@@ -8,6 +8,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,800;1,700;1,800&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1447480870692803');
+fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1447480870692803&ev=PageView&noscript=1" alt=""></noscript>
+<!-- End Meta Pixel -->
 <style>
 /* =========================================================
    VERSÃO ENXUTA (layout inspirado em página de vendas de pack,
@@ -46,7 +54,10 @@ s{color:var(--muted);text-decoration:line-through}
 .safe{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;font-size:13px;color:#d6d6d6;text-align:center}
 .safe svg{flex:none}
 
-.topbar{position:sticky;top:0;z-index:50;background:var(--red);text-align:center;font-family:'Archivo',Arial,sans-serif;font-weight:700;font-size:11px;letter-spacing:.12em;padding:9px var(--gutter);text-transform:uppercase}
+.topbar{position:sticky;top:0;z-index:50;text-align:center;font-family:'Archivo',Arial,sans-serif;font-weight:700;font-size:11px;letter-spacing:.12em;padding:10px var(--gutter);text-transform:uppercase;color:#fff;
+  background:linear-gradient(180deg,rgba(47,107,255,.34),rgba(47,107,255,.16));
+  -webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
 
 /* ===== PRIMEIRA DOBRA ===== */
 .hero{padding:28px 0 48px}
@@ -210,7 +221,7 @@ footer a{color:#888}
 </head>
 <body>
 
-<div class="topbar">Pagamento único · Sem mensalidade · Download imediato</div>
+<div class="topbar">Pagamento único · Sem mensalidade</div>
 
 <!-- ============ PRIMEIRA DOBRA (com botão) ============ -->
 <section class="hero">
@@ -319,10 +330,8 @@ footer a{color:#888}
   <div class="wrap">
     <h2 class="h2">Dúvidas rápidas</h2>
     <div class="faq">
-      <details><summary>Funciona no meu programa?</summary><p>Os packs foram pensados para After Effects, Premiere Pro, DaVinci Resolve, Final Cut Pro e Apple Motion. O formato muda de pack para pack (por exemplo, LUTs servem para os editores que aceitam LUT), então veja a compatibilidade de cada um <span class="confirm">[CONFIRMAR: onde o cliente vê o formato de cada pack]</span>.</p></details>
-      <details><summary>Como recebo os arquivos?</summary><p>Logo após a confirmação do pagamento você recebe o acesso <span class="confirm">[CONFIRMAR: e-mail, área de membros ou Drive]</span>.</p></details>
-      <details><summary>Posso usar em trabalhos de clientes?</summary><p>O acesso padrão é para uso pessoal. Para usar em vídeos de clientes, anúncios e projetos pagos, você pode adicionar a licença comercial vitalícia na hora do checkout.</p></details>
-      <details><summary>Como peço reembolso?</summary><p>Dentro de 7 dias após a compra, é só pedir pelo <span class="confirm">[CONFIRMAR: e-mail/WhatsApp/plataforma]</span>. Devolvemos 100% do valor.</p></details>
+      <details><summary>Funciona no meu programa?</summary><p>Os packs foram pensados para After Effects, Premiere Pro, DaVinci Resolve, Final Cut Pro e Apple Motion. O formato muda de pack para pack. Por exemplo, LUTs servem para os editores que aceitam LUT. Então veja a compatibilidade de cada um.</p></details>
+      <details><summary>Como recebo os arquivos?</summary><p>Logo após a confirmação do pagamento, você tem acesso à plataforma com todos os arquivos.</p></details>
     </div>
   </div>
 </section>
@@ -346,9 +355,13 @@ footer a{color:#888}
 
 <script>
 /* ====== TROQUE AQUI O LINK DE CHECKOUT ====== */
-/* A licença comercial deve ser configurada como order bump dentro do checkout. */
-const CHECKOUT_URL = "https://SEU-CHECKOUT.com/motion-pack-master";
-document.querySelectorAll('.js-checkout:not(.hero .js-checkout)').forEach(a=>a.href=CHECKOUT_URL);
+const CHECKOUT_URL = "https://pay.kiwify.com.br/ynLHqEP";
+document.querySelectorAll('.js-checkout:not(.hero .js-checkout)').forEach(a=>{
+  a.href=CHECKOUT_URL;
+  a.addEventListener('click',()=>{ window.fbq && fbq('track','InitiateCheckout',{content_name:'Motion Pack Master',value:97,currency:'BRL'}); });
+});
+/* Meta Pixel: visualização do produto */
+window.fbq && fbq('track','ViewContent',{content_name:'Motion Pack Master',value:97,currency:'BRL'});
 
 /* Packs (nome, quantidade) — preencha as quantidades que faltam */
 const PACKS = [
