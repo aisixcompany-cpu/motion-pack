@@ -365,11 +365,13 @@ const PACKS = [
 ];
 document.getElementById('packs').innerHTML = PACKS.map((p,i)=> `
   <article class="pack${i===0?' big':''}">
-    <div class="ph" data-media="${p[2]}" data-alt="Pack ${p[0]}"><div><b>[IMAGEM]</b>images/${p[2]}.webp — ${i===0?'16:9 horizontal':'4:3, mostre vários itens do pack'}</div></div>
+    <div class="ph" data-media="${p[2]}" data-alt="Pack ${p[0]}"><div><b>[IMAGEM]</b>Images/${p[2]}.webp — ${i===0?'16:9 horizontal':'4:3, mostre vários itens do pack'}</div></div>
     <div class="row"><h3>${p[0]}</h3>${p[1]?`<span class="n">${p[1]}</span>`:''}</div>
   </article>`).join('');
 
 /* Mídia: procura images/<nome>.(webp|jpg|png|gif|mp4). Sem arquivo, o placeholder continua. */
+/* Nome da pasta no GitHub (maiúscula/minúscula importa). */
+const IMG_DIR = 'Images/';
 const EXTS = ['webp','jpg','png','gif','mp4'];
 function showMedia(el, m){
   el.classList.add('filled'); el.replaceChildren(m);
@@ -379,7 +381,7 @@ function loadMedia(el){
   const name = el.dataset.media; let i = 0;
   (function next(){
     if (i >= EXTS.length) return;
-    const ext = EXTS[i++], url = 'images/' + name + '.' + ext;
+    const ext = EXTS[i++], url = IMG_DIR + name + '.' + ext;
     if (ext === 'mp4'){
       const v = document.createElement('video');
       v.muted = true; v.loop = true; v.autoplay = true; v.playsInline = true; v.setAttribute('playsinline',''); v.preload = 'auto';
