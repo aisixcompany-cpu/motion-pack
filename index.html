@@ -233,7 +233,7 @@ footer a{color:#888}
         <p class="sub">Recursos premium de motion, títulos, SFX e LUTs, organizados em 10 packs e prontos pra usar. Arrasta pra timeline, troca o texto e publica.</p>
 
         <div class="price-line"><b>R$ 97,00</b><small><s>R$ 499,00</s> · pagamento único</small></div>
-        <a href="#oferta" class="btn js-checkout">Quero o Motion Pack Master</a>
+        <a href="#" class="btn js-checkout">Quero o Motion Pack Master</a>
         <p class="safe">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F6BFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
           <span><b>7 dias de garantia.</b> Não gostou? Devolvemos 100% do valor.</span>
@@ -356,10 +356,9 @@ footer a{color:#888}
 <script>
 /* ====== TROQUE AQUI O LINK DE CHECKOUT ====== */
 const CHECKOUT_URL = "https://pay.kiwify.com.br/ynLHqEP";
-document.querySelectorAll('.js-checkout:not(.hero .js-checkout)').forEach(a=>{
-  a.href=CHECKOUT_URL;
-  a.addEventListener('click',()=>{ window.fbq && fbq('track','InitiateCheckout',{content_name:'Motion Pack Master',value:97,currency:'BRL'}); });
-});
+/* Todos os botões de compra (inclusive o da primeira dobra) vão direto ao checkout.
+   O InitiateCheckout é disparado pela própria Kiwify, então não duplicamos aqui. */
+document.querySelectorAll('.js-checkout').forEach(a=>{ a.href = CHECKOUT_URL; });
 /* Meta Pixel: visualização do produto */
 window.fbq && fbq('track','ViewContent',{content_name:'Motion Pack Master',value:97,currency:'BRL'});
 
