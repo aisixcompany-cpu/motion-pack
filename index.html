@@ -93,6 +93,8 @@ s{color:var(--muted);text-decoration:line-through}
 .pack .n{font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;background:#fff;color:#000;border-radius:var(--pill);padding:4px 10px;white-space:nowrap}
 .pack.big .ph{aspect-ratio:16/9}
 .packs.bonus .ph{aspect-ratio:16/9}
+.bonus-line{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-size:13px;color:#e6e6e6;margin:0 0 12px}
+.bonus-line b{font-family:'Archivo',sans-serif;font-size:11px;letter-spacing:.06em;background:var(--red);color:#fff;border-radius:var(--pill);padding:3px 10px}
 .bonus-desc{padding:0 4px 4px;color:#cfcfcf;font-size:14px;line-height:1.5}
 .pack.big h3{font-size:26px}
 
@@ -201,6 +203,8 @@ footer a{color:#888}
   .hero h1{font-size:48px}
   .hero .sub{font-size:18px;max-width:520px;margin-bottom:18px}
   .hero-copy .price-line{justify-content:flex-start}
+  .bonus-line{justify-content:flex-start}
+  .packs.bonus{grid-template-columns:repeat(2,1fr);max-width:900px;margin-left:auto;margin-right:auto}
   .hero-copy .btn{max-width:460px}
   .hero-copy .safe{justify-content:flex-start}
   .chips{justify-content:flex-start}
@@ -235,6 +239,7 @@ footer a{color:#888}
         <p class="sub">Recursos premium de motion, títulos, SFX e LUTs, organizados em 10 packs e prontos pra usar. Arrasta pra timeline, troca o texto e publica.</p>
 
         <div class="price-line"><b>R$ 97,00</b><small><s>R$ 499,00</s> · pagamento único</small></div>
+        <p class="bonus-line"><b>+ 2 BÔNUS</b> Texto Caixa e Vídeos SaaS</p>
         <a href="#" class="btn js-checkout">Quero o Motion Pack Master</a>
         <p class="safe">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F6BFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
